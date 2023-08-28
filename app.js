@@ -1,7 +1,7 @@
-
 import "dotenv/config";
 import fileDirName from "./modules/dirname.js";
 import express from "express";
+
 import path from "path";
 import helmet from "helmet";
 import morgan from "morgan";
@@ -16,6 +16,25 @@ const { __dirname } = fileDirName(import.meta);
 
 // Routes setup
 app.use("/", views);
+app.use("/usuario", userRouter);
+
+app.post(
+  "/usuario",
+  body("email").notEmpty().isEmail(),
+  body("password").notEmpty(),
+  (req, res) => {
+    const errors = validationResult(req);
+
+    if (errors.isEmpty()) {
+      return res.json(req.body);
+    }
+    console.log(req.body);
+    res.status(400).json(errors.array());
+  }
+);
+
+app.use("/playlist", playlistRouter);
+app.use("/canciones", songRouter);
 
 //configuración del motor de plantillas
 app.set("views", path.join(__dirname, "views"));
