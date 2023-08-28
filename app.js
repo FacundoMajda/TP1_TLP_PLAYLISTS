@@ -7,7 +7,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 import { sequelize } from "./db.js";
 
-import views from "./routes/index.routes.js";
+import { configRelations } from "./relations.js";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -61,7 +61,9 @@ app.use((req, res, next) => {
 app.listen(port, async () => {
   try {
     await sequelize.authenticate();
-    app.use("./modules/relations.js");
+
+    // ejecutar las relaciones
+    configRelations();
 
     console.log("Conexión a base de datos exitosa");
   } catch (error) {

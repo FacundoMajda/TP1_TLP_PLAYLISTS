@@ -3,7 +3,7 @@ import { UserModel } from "./models/user.model";
 import { PlaylistModel } from "./models/playlist.model";
 import { SongModel } from "./models/song.model";
 
-export const configureRelations = async () => {
+export const configRelations = async () => {
   try {
     PlaylistModel.belongsTo(UserModel, {
       foreignKey: "id_user",
@@ -34,4 +34,4 @@ export const configureRelations = async () => {
 };
 
 // Ejecutar la configuración de relaciones
-configureRelations();
+configRelations();
