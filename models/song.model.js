@@ -51,12 +51,6 @@ export const SongModel = sequelize.define(
     paranoid: true,
   }
 );
-
-// se establece la relación muchos a uno con Playlist
-SongModel.belongsTo(PlaylistModel, {
-  foreignKey: "id_playlist",
-});
-
 // función asincrónica para sincronizar el modelo con la base de datos.
 (async () => {
   try {

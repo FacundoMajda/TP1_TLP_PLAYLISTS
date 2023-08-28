@@ -45,9 +45,6 @@ export const UserModel = sequelize.define(
   }
 );
 
-// se establece la relación uno a muchos con Playlist
-UserModel.hasMany(PlaylistModel, { foreignKey: "id_user" });
-
 //función asincrónica para sincronizar el modelo con la base de datos.
 (async () => {
   try {

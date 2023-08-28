@@ -61,6 +61,8 @@ app.use((req, res, next) => {
 app.listen(port, async () => {
   try {
     await sequelize.authenticate();
+    app.use("./modules/relations.js");
+
     console.log("Conexión a base de datos exitosa");
   } catch (error) {
     console.log("Error al conectar a base de datos", error);
