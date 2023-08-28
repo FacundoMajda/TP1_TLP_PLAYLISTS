@@ -4,8 +4,8 @@ import {
   getUsersCtrl,
   getUserByIdCtrl,
 } from "../controllers/user.controller.js";
-import { validateSchema } from "../middleware/validationSchema.js";
-import { createUserSchema } from "../model/user.schema.js";
+import { validateSchema } from "../middlewares/validator.js";
+import { userSchema } from "../schemas/user.schema.js";
 
 const userRouter = Router();
 
@@ -14,12 +14,7 @@ userRouter.get("/:id", getUserByIdCtrl);
 
 // con createCheckSchema se validan los campos del body y luego
 // se pasa a validateSchema para que se ejecute la validación
-userRouter.post("/", createUserSchema, validateSchema, createUserCtrl);
-
-
-//Vistas
-// // router.get("/", indexView);
-// router.get("/form", form);
+userRouter.post("/NewUser", userSchema, validateSchema, createUserCtrl);
 
 // API CRUD
 router.get("/api", index);

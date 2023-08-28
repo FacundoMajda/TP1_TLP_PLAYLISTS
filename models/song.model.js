@@ -2,21 +2,29 @@
 import { sequelize, DataTypes } from "../db.js";
 import { PlaylistModel } from "./playlist.model.js";
 
-// se define el modelo de usuario
-export const UserModel = sequelize.define(
-  "User",
+// se define el modelo de cancion
+export const SongModel = sequelize.define(
+  "Song",
   {
-    id_user: {
+    id_cancion: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    nickname: {
+    name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    password: {
+    artist: {
       type: DataTypes.STRING,
+      allowNull: false,
+    },
+    date_released: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    song_length: {
+      type: DataTypes.TIME,
       allowNull: false,
     },
     estate_soft_delete: {
@@ -36,24 +44,25 @@ export const UserModel = sequelize.define(
     deletedAt: {
       type: DataTypes.DATE,
       allowNull: true,
-      defaultValue: null,
     },
   },
   {
-    tableName: "users",
+    tableName: "songs",
     paranoid: true,
   }
 );
 
-// se establece la relación uno a muchos con Playlist
-UserModel.hasMany(PlaylistModel, { foreignKey: "id_user" });
+// se establece la relación muchos a uno con Playlist
+SongModel.belongsTo(PlaylistModel, {
+  foreignKey: "id_playlist",
+});
 
-//función asincrónica para sincronizar el modelo con la base de datos.
+// función asincrónica para sincronizar el modelo con la base de datos.
 (async () => {
   try {
-    await UserModel.sync({ force: true });
-    console.log("User Model: OK");
+    await SongModel.sync({ force: true });
+    console.log("Song Model: OK");
   } catch (error) {
-    console.error("Error syncing User Model:", error);
+    console.error("Error syncing Song Model:", error);
   }
 })();

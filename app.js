@@ -1,4 +1,4 @@
-//@ts-check
+
 import "dotenv/config";
 import fileDirName from "./modules/dirname.js";
 import express from "express";
@@ -10,7 +10,7 @@ import { sequelize } from "./db.js";
 import views from "./routes/index.routes.js";
 
 const app = express();
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 3000;
 
 const { __dirname } = fileDirName(import.meta);
 
@@ -36,8 +36,8 @@ app.use(
 );
 
 app.use((req, res, next) => {
-  return res.status(404).render('404');
-})
+  return res.status(404).render("404");
+});
 
 app.listen(port, async () => {
   try {
