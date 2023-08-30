@@ -1,16 +1,10 @@
 import { validationResult } from "express-validator";
-import { SongModel } from "../models/song.model";
-import { PlaylistModel } from "../models/playlist.model";
+import { SongModel } from "../models/song.model.js";
+import { PlaylistModel } from "../models/playlist.model.js";
 
 // Crear una canción
 export const crearCancion = async (req, res) => {
-  const {
-    name,
-    artist,
-    date_released,
-    song_length,
-    id_playlist,
-  } = req.body;
+  const { name, artist, id_playlist } = req.body;
 
   try {
     const errors = validationResult(req);
@@ -28,9 +22,7 @@ export const crearCancion = async (req, res) => {
     const newSong = await SongModel.create({
       name,
       artist,
-      date_released,
-      song_length,
-      id_playlist,
+      PlaylistId: id_playlist,
     });
 
     return res.status(201).json({
@@ -56,10 +48,7 @@ export const obtenerCancion = async (req, res) => {
     });
 
     if (!song) {
-      throw {
-        status: 404,
-        message: "No existe la canción",
-      };
+      return res.status(404).json({ message: "No existe la canción" });
     }
 
     return res.json(song);

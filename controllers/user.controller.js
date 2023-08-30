@@ -1,5 +1,7 @@
+//@ts-check
 import { validationResult } from "express-validator";
-import { UserModel } from "../models/user.model";
+import { UserModel } from "../models/user.model.js";
+import bcrypt from "bcrypt"; 
 
 // Obtener todos los usuarios
 export const obtenerUsuarios = async (req, res) => {
@@ -20,10 +22,7 @@ export const obtenerUsuario = async (req, res) => {
     const usuario = await UserModel.findByPk(id);
 
     if (!usuario) {
-      throw {
-        status: 404,
-        message: "No existe el usuario",
-      };
+      return res.status(404).json({ message: "No existe el usuario" });
     }
 
     return res.json(usuario);
@@ -45,9 +44,12 @@ export const crearUsuario = async (req, res) => {
       return res.status(400).json({ errors: errors.array() });
     }
 
+    // Hash de la contraseña
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     const newUser = await UserModel.create({
       nickname,
-      password,
+      password: hashedPassword,
     });
 
     return res.status(201).json({

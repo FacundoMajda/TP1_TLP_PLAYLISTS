@@ -32,6 +32,3 @@ export const configRelations = async () => {
     );
   }
 };
-
-// Ejecutar la configuración de relaciones
-configRelations();

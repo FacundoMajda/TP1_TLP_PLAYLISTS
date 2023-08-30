@@ -1,6 +1,5 @@
 //@ts-check
 import express from "express";
-import { Router } from "express";
 import {
   crearPlaylist,
   obtenerPlaylist,
@@ -10,17 +9,22 @@ import {
 } from "../controllers/playlist.controller.js";
 import { validateSchema } from "../middlewares/validator.js";
 import { playlistSchema } from "../schemas/playlist.schema.js";
+
 const playlistRouter = express.Router();
 
-//Rutas para playlists
+// Ruta para crear una nueva playlist
 playlistRouter.post("/createPlaylist", playlistSchema, crearPlaylist);
 
+// Ruta para obtener una playlist por su ID
 playlistRouter.get("/playlist/:id", obtenerPlaylist);
 
+// Ruta para obtener todas las playlists
 playlistRouter.get("/playlist/", obtenerPlaylists);
 
+// Ruta para actualizar una playlist por su ID
 playlistRouter.put("/playlist/:id", actualizarPlaylist);
 
+// Ruta para eliminar una playlist por su ID
 playlistRouter.delete("/playlist/:id", eliminarPlaylist);
 
 export default playlistRouter;

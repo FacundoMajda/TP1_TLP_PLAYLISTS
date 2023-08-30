@@ -15,18 +15,6 @@ export const SongModel = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    artist: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    date_released: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    song_length: {
-      type: DataTypes.TIME,
-      allowNull: false,
-    },
     estate_soft_delete: {
       type: DataTypes.BOOLEAN,
       defaultValue: true,
@@ -51,6 +39,7 @@ export const SongModel = sequelize.define(
     paranoid: true,
   }
 );
+
 // función asincrónica para sincronizar el modelo con la base de datos.
 (async () => {
   try {

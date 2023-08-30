@@ -1,3 +1,5 @@
+//@ts-check
+
 import { validationResult } from "express-validator";
 import { PlaylistModel } from "../models/playlist.model";
 import { UserModel } from "../models/user.model";
@@ -6,7 +8,11 @@ import { SongModel } from "../models/song.model";
 // Obtener todas las playlists
 export const obtenerPlaylists = async (req, res) => {
   try {
-    const playlists = await PlaylistModel.findAll();
+    const playlists = await PlaylistModel.findAll({
+      where: {
+        estado: true,
+      },
+    });
     return res.json(playlists);
   } catch (error) {
     console.error("Error al obtener las playlists", error);
@@ -19,19 +25,16 @@ export const obtenerPlaylist = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const playlists = await PlaylistModel.findOne({
+    const playlist = await PlaylistModel.findOne({
       where: { id },
       include: [{ model: SongModel }],
     });
 
-    if (!playlists) {
-      throw {
-        status: 404,
-        message: "No existe la playlist",
-      };
+    if (!playlist) {
+      return res.status(404).json({ message: "No existe la playlist" });
     }
 
-    return res.json(playlists);
+    return res.json(playlist);
   } catch (error) {
     return res
       .status(error.status || 500)
@@ -80,8 +83,8 @@ export const actualizarPlaylist = async (req, res) => {
     const playlist = await PlaylistModel.findByPk(id);
 
     if (!playlist) {
-      return res.status(500).json({
-        message: "Error al actualizar la playlist",
+      return res.status(404).json({
+        message: "No se encontró la playlist",
       });
     }
 
@@ -109,10 +112,9 @@ export const eliminarPlaylist = async (req, res) => {
     });
 
     if (!playlistEliminada) {
-      throw {
-        status: 400,
+      return res.status(400).json({
         message: "No se pudo eliminar la playlist",
-      };
+      });
     }
 
     return res.json({
