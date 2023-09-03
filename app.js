@@ -1,3 +1,4 @@
+//@ts-check
 // Import y carga las variables de entorno desde el archivo .env
 import "dotenv/config";
 
@@ -12,9 +13,9 @@ import morgan from "morgan";
 import { sequelize } from "./db.js";
 
 // Importa las rutas de cada entidad
-import { playlistRouter } from "./routes/playlist.routes.js";
-import { userRouter } from "./routes/user.routes.js";
-import { songRouter } from "./routes/song.routes.js";
+import playlistRouter from "./routes/playlists.routes.js";
+import userRouter from "./routes/user.routes.js";
+import songRouter from "./routes/song.routes.js";
 
 // Importa la función para configurar las relaciones entre modelos
 import { configRelations } from "./modules/relations.js";
@@ -27,7 +28,7 @@ const port = process.env.PORT || 3000;
 const { __dirname } = fileDirName(import.meta);
 
 // Configuración de las rutas de las vistas y las entidades
-app.use("/", views); // Configura tus rutas de vistas aquí
+// app.use("/", views); // Configura tus rutas de vistas aquí
 app.use("/users", userRouter); // Rutas de usuarios
 app.use("/playlist", playlistRouter); // Rutas de playlists
 app.use("/songs", songRouter); // Rutas de canciones

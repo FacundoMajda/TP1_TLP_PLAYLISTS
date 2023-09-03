@@ -1,4 +1,4 @@
-//@ts-check
+
 
 import { validationResult } from "express-validator";
 import { PlaylistModel } from "../models/playlist.model";

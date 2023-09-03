@@ -13,7 +13,12 @@ import { playlistSchema } from "../schemas/playlist.schema.js";
 const playlistRouter = express.Router();
 
 // Ruta para crear una nueva playlist
-playlistRouter.post("/createPlaylist", playlistSchema, crearPlaylist);
+playlistRouter.post(
+  "/createPlaylist",
+  playlistSchema,
+  validateSchema,
+  crearPlaylist
+);
 
 // Ruta para obtener una playlist por su ID
 playlistRouter.get("/playlist/:id", obtenerPlaylist);

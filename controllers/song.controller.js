@@ -1,3 +1,5 @@
+//@ts-check
+
 import { validationResult } from "express-validator";
 import { SongModel } from "../models/song.model.js";
 import { PlaylistModel } from "../models/playlist.model.js";
